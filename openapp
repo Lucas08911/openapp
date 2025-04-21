@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Abre o menu de aplicativos do YAD
+yadresult=$(yad --app --enable-other)
+
+# Verifica se a pessoa apertou Cancelar ou deixou vazio
+if [ -z "$yadresult" ]; then
+    zenity --warning --title "Aviso" --text "Nenhum aplicativo foi selecionado."
+    exit 1
+fi
+
+# Verifica se o resultado é 'env' (ou qualquer outro que queira bloquear)
+if [ "$yadresult" == "env" ]; then
+    zenity --warning --title "Abrir App" --text "Você escolheu um app inválido."
+    exit 1
+fi
+
+# Executa o aplicativo digitado
+"$yadresult" &
+
