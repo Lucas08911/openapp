@@ -1,20 +1,21 @@
 #!/bin/bash
 
-# Abre o menu de aplicativos do YAD
+# Open YAD application chooser dialog
 yadresult=$(yad --app --enable-other)
 
-# Verifica se a pessoa apertou Cancelar ou deixou vazio
+# Check if the user canceled or left it empty
 if [ -z "$yadresult" ]; then
-    zenity --warning --title "Aviso" --text "Nenhum aplicativo foi selecionado."
+    zenity --warning --title="Warning" --text="No application was selected."
     exit 1
 fi
 
-# Verifica se o resultado é 'env' (ou qualquer outro que queira bloquear)
+# Block invalid app name (example: "env")
 if [ "$yadresult" == "env" ]; then
-    zenity --warning --title "Abrir App" --text "Você escolheu um app inválido."
+    zenity --warning --title="Open App" --text="You chose an invalid app."
     exit 1
 fi
 
-# Executa o aplicativo digitado
+# Run the selected or typed-in app
 "$yadresult" &
+
 
